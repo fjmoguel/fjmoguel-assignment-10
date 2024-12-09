@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 70%;
+            max-width: 900px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            font-weight: bold;
+            margin: 10px 0 5px;
+        }
+        form input,
+        form select,
+        form button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        form input[type="file"] {
+            padding: 5px;
+        }
+        form input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            margin-top: 30px;
+            color: #444444;
+        }
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            gap: 20px;
+            justify-content: center;
+        }
+        ul li {
+            background: #fdfdfd;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 150px;
+            text-align: center;
+        }
+        ul li img {
+            max-width: 100%;
+            max-height: 120px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        ul li p {
+            font-size: 14px;
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enhanced Image Search</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="image_query">Image Query:</label>
+            <input type="file" name="image_query" id="image_query">
+
+            <label for="text_query">Text Query:</label>
+            <input type="text" name="text_query" id="text_query" placeholder="Type your query here">
+
+            <label for="hybrid_weight">Hybrid Query Weight (λ):</label>
+            <input type="number" name="hybrid_weight" id="hybrid_weight" step="0.1" min="0.0" max="1.0" value="0.8">
+
+            <label for="use_pca">Use PCA for image query:</label>
+            <input type="checkbox" name="use_pca" id="use_pca">
+
+            <label for="n_components">Number of Principal Components (k):</label>
+            <input type="number" name="n_components" id="n_components" value="5" min="1">
+
+            <label for="query_type">Select Query Type:</label>
+            <select name="query_type" id="query_type">
+                <option value="image_query">Image Query</option>
+                <option value="text_query">Text Query</option>
+                <option value="hybrid_query">Hybrid Query</option>
+            </select>
+
+            <button type="submit">Search</button>
+        </form>
+
+        <h2>Search Results</h2>
+        <ul>
+            {% for result in results %}
+            <li>
+                <img src="{{ result[0] }}" alt="Result Image">
+                <p>Similarity Score: {{ result[1] }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
