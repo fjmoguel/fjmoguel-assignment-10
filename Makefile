@@ -5,11 +5,11 @@ REQUIREMENTS = requirements.txt
 
 install:
 	$(PYTHON) -m venv $(VENV)
-	./$(VENV)/bin/pip install --upgrade pip
-	./$(VENV)/bin/pip install -r $(REQUIREMENTS)
+	./$(VENV)/bin/python -m pip install --upgrade pip --break-system-packages
+	./$(VENV)/bin/python -m pip install -r $(REQUIREMENTS)
 
 run: install
-	FLASK_APP=$(FLASK_APP) FLASK_ENV=development ./$(VENV)/bin/flask run --port=3000
+	./$(VENV)/bin/python -m flask run --port=3000 --host=0.0.0.0
 
 clean:
 	rm -rf $(VENV)
